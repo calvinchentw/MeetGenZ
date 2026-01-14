@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.2">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="zh-TW"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;RPG 職場轉生錄：Gen Z 管理風格測驗&lt;/title&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 引入 Tailwind CSS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 引入 React 和 ReactDOM --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"&gt;&lt;/script&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 引入 Babel 用於解析 JSX --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/@babel/standalone/babel.min.js"&gt;&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* 自定義動畫 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes fadeIn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>from { opacity: 0; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>to { opacity: 1; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes slideUp {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>from { transform: translateY(20px); opacity: 0; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>to { transform: translateY(0); opacity: 1; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.animate-fadeIn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: fadeIn 0.5s ease-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.animate-slideUp {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: slideUp 0.5s ease-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="bg-gray-50 text-gray-800"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="root"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script type="text/babel"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const { useState } = React;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- Icon Components (SVG) ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const Icon = ({ children, className, size = 24 }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;svg<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>xmlns="http://www.w3.org/2000/svg"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>width={size}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>height={size}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>viewBox="0 0 24 24"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>fill="none"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>stroke="currentColor"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>strokeWidth="2"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>strokeLinecap="round"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>strokeLinejoin="round"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>className={className}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{children}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const Shield = (props) =&gt; &lt;Icon {...props}&gt;&lt;path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/&gt;&lt;/Icon&gt;;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const BookOpen = (props) =&gt; &lt;Icon {...props}&gt;&lt;path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/&gt;&lt;path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/&gt;&lt;/Icon&gt;;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const Target = (props) =&gt; &lt;Icon {...props}&gt;&lt;circle cx="12" cy="12" r="10"/&gt;&lt;circle cx="12" cy="12" r="6"/&gt;&lt;circle cx="12" cy="12" r="2"/&gt;&lt;/Icon&gt;;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const Leaf = (props) =&gt; &lt;Icon {...props}&gt;&lt;path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/&gt;&lt;path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/&gt;&lt;/Icon&gt;;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const Heart = (props) =&gt; &lt;Icon {...props}&gt;&lt;path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/&gt;&lt;/Icon&gt;;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const ChevronRight = (props) =&gt; &lt;Icon {...props}&gt;&lt;polyline points="9 18 15 12 9 6"/&gt;&lt;/Icon&gt;;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const RefreshCcw = (props) =&gt; &lt;Icon {...props}&gt;&lt;polyline points="1 4 1 10 7 10"/&gt;&lt;polyline points="23 20 23 14 17 14"/&gt;&lt;path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/&gt;&lt;/Icon&gt;;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const Sparkles = (props) =&gt; &lt;Icon {...props}&gt;&lt;path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/&gt;&lt;path d="M5 3v4"/&gt;&lt;path d="M9 3v4"/&gt;&lt;path d="M3 5h4"/&gt;&lt;path d="M3 9h4"/&gt;&lt;/Icon&gt;;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const Sword = (props) =&gt; &lt;Icon {...props}&gt;&lt;polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/&gt;&lt;line x1="13" y1="19" x2="19" y2="13"/&gt;&lt;line x1="16" y1="16" x2="20" y2="20"/&gt;&lt;line x1="19" y1="21" x2="21" y2="19"/&gt;&lt;/Icon&gt;;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const Zap = (props) =&gt; &lt;Icon {...props}&gt;&lt;polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/&gt;&lt;/Icon&gt;;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- Main App Component ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const QuizApp = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const [currentScreen, setCurrentScreen] = useState('intro');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const [currentQuestion, setCurrentQuestion] = useState(0);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const [scores, setScores] = useState({</p>
+<p class="p1"><span class="Apple-converted-space">                </span>knight: 0,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>mage: 0,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ranger: 0,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>druid: 0</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const questions = [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>id: 1,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>question: "當 Gen Z 員工提出一個看起來很冒險的新點子時，你的第一反應是？",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>options: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "評估這個點子是否符合公司的既有規範與長遠價值。", type: "knight" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "請他提出數據支持，並分析潛在的風險與回報率。", type: "mage" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "只要不影響原本的KPI，就讓他放手去試試看。", type: "ranger" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "先肯定他的創意，並關心他為什麼想做這件事。", type: "druid" }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>id: 2,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>question: "員工這週因為私事心情低落，影響了工作進度，你會怎麼處理？",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>options: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "雖然表示遺憾，但強調公私分明，工作期限不能變。", type: "knight" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "幫他重新梳理流程，看哪裡可以優化效率來補救。", type: "mage" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "告訴他只要週末前把結果交出來，這幾天怎麼安排都行。", type: "ranger" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "約個時間聊聊，確認他的心理狀態，並主動分擔部分壓力。", type: "druid" }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>id: 3,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>question: "關於「下班後回訊息」這件事，你的態度是？",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>options: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "身為團隊一員，緊急狀況時隨時待命是責任。", type: "knight" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "如果這件事能透過預排郵件或自動化解決，就不該打擾人。", type: "mage" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "我不看過程，只看明天早上東西有沒有在桌上。", type: "ranger" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "極力避免，因為這會破壞員工的「工作與生活平衡」。", type: "druid" }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>id: 4,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>question: "Gen Z 員工直接在群組裡質疑你的決策，你會？",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>options: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "私下找他談，告訴他雖然意見很好，但要注意職場倫理。", type: "knight" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "當場列出決策背後的邏輯與數據，理性辯論。", type: "mage" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "如果他的方法能更快達成目標，那聽他的也無妨。", type: "ranger" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "感謝他的直率，並邀請大家一起討論大家的感受與看法。", type: "druid" }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>id: 5,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>question: "你認為對年輕員工最有效的獎勵方式是？",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>options: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "公開表揚，賦予更高的頭銜或職責。", type: "knight" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "提供學習新技能或參加高階培訓的機會。", type: "mage" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "給予遠端工作機會或更彈性的工時。", type: "ranger" },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ text: "重視他的個人價值，讓他感受到被團隊需要。", type: "druid" }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const results = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>knight: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: "鋼鐵聖騎士",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>icon: &lt;Shield size={64} className="text-blue-500" /&gt;,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>color: "blue",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>desc: "你是團隊的守護者，重視榮譽、結構與承諾。你以身作則，是團隊最堅實的後盾。",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>strengths: "Gen Z 雖然反體制，但其實渴望清晰的指引。你的穩定性與擔當能讓他們感到安心，不會在混亂中迷失方向。",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>weaknesses: "過度強調「職場倫理」或「階級」容易讓年輕人覺得迂腐。他們尊重的不是頭銜，而是真實的能力與態度。",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>advice: "建議研讀 **COACH Model**，將角色從「指揮官」轉為「教練」。對 Gen Z 來說，尊嚴來自於你能透過提問與引導（Asking &amp; Guiding）和他們一起解決問題，而不只是坐在上位發號施令。"</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>mage: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: "全知大魔導",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>icon: &lt;BookOpen size={64} className="text-purple-500" /&gt;,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>color: "purple",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>desc: "你是智慧的化身，講求邏輯、效率與策略。你總是能看透問題本質，用知識武裝團隊。",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>strengths: "Gen Z 是數位原住民，喜歡高效率與透明資訊。你「講道理、不情緒化」的風格非常對他們的胃口，能快速建立專業信任。",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>weaknesses: "有時候你可能顯得太冷漠或過度說教。年輕員工除了需要「解決方案」，有時也需要「被同理」的情感連結。",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>advice: "建議參考 **PROUD Model**，除了邏輯分析，更要關注如何建立團隊的「自豪感」與「歸屬感」。試著多了解他們個人的驅動力，讓他們在理性執行之外，也能對工作產生情感上的熱情。"</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ranger: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: "荒野遊俠",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>icon: &lt;Target size={64} className="text-green-500" /&gt;,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>color: "green",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>desc: "你是自由的信徒，目標導向，不在乎形式。你給予團隊極大的空間，只看最後的獵物（成果）。",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>strengths: "這正是許多 Gen Z 夢寐以求的主管！不 micromanage、重視彈性、結果論。你給予的信任能激發他們最大的創意。",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>weaknesses: "對於需要指導的新人來說，你的「放養」可能被解讀為「冷漠」或「缺乏支援」。他們可能會在迷茫中感到焦慮。",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>advice: "自由需要邊界，建議借鏡 **RISE UP Model** 的精神，在給予彈性的同時，建立定期的支持系統與回饋機制。確保他們在放飛自我的同時，也能感受到組織的支撐（Support）與提升（Elevate）。"</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>druid: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: "森林德魯伊",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>icon: &lt;Leaf size={64} className="text-emerald-500" /&gt;,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>color: "emerald",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>desc: "你是心靈的導師，重視和諧、成長與包容。你將團隊視為一個有機生態系，關注每個人的身心狀態。",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>strengths: "你極度重視心理安全感與個人成長，這完全打中 Gen Z 追求「意義感」與「被尊重」的核心需求。離職率通常最低。",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>weaknesses: "為了維護和諧，你可能過度包容錯誤，或不敢給予直接的負面回饋。這會讓優秀的人覺得不公平，或讓團隊成長停滯。",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>advice: "「溫柔的堅定」是你的課題。建議深入研讀 **COACH Model** 中的具體回饋技巧，練習給予真實且直接的建議。記住，為了和諧而隱瞞問題不是仁慈，幫助他們面對現實並成長，才是真正的教練。"</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const handleOptionClick = (type) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setScores(prev =&gt; ({</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>...prev,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>[type]: prev[type] + 1</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}));</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (currentQuestion &lt; questions.length - 1) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>setCurrentQuestion(prev =&gt; prev + 1);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>setCurrentScreen('result');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const getResult = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return Object.keys(scores).reduce((a, b) =&gt; scores[a] &gt; scores[b] ? a : b);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const resetQuiz = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setScores({ knight: 0, mage: 0, ranger: 0, druid: 0 });</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setCurrentQuestion(0);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setCurrentScreen('intro');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const IntroScreen = () =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="flex flex-col items-center justify-center p-8 text-center animate-fadeIn min-h-[60vh]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="mb-6 p-4 bg-indigo-100 rounded-full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;Sparkles size={48} className="text-indigo-600" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h1 className="text-3xl font-bold mb-4 text-gray-800"&gt;RPG 職場轉生錄&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h2 className="text-xl text-gray-600 mb-8"&gt;當主管遇上 Gen Z：你的管理風格是哪個職業？&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p className="text-gray-500 max-w-md mb-8 leading-relaxed"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>Z 世代帶著全新的價值觀進入職場。透過這個簡短的心理測驗，找出你的 RPG 職業原型，探索你與新世代共處的優勢與盲點。</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>onClick={() =&gt; setCurrentScreen('quiz')}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>className="flex items-center gap-2 px-8 py-4 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 transition-all shadow-lg hover:shadow-indigo-300/50 cursor-pointer"</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>開始冒險 &lt;ChevronRight /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const QuizScreen = () =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="w-full max-w-xl mx-auto p-6 animate-slideUp"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="mb-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="flex justify-between text-sm text-gray-500 mb-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span&gt;Quest {currentQuestion + 1}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span&gt;{questions.length} Total&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="w-full bg-gray-200 rounded-full h-2.5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>className="bg-indigo-600 h-2.5 rounded-full transition-all duration-300"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 className="text-2xl font-bold text-gray-800 mb-8 leading-snug"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{questions[currentQuestion].question}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/h3&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{questions[currentQuestion].options.map((option, index) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;button</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>key={index}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>onClick={() =&gt; handleOptionClick(option.type)}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>className="w-full p-5 text-left bg-white border-2 border-gray-100 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition-all duration-200 group cursor-pointer"</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div className="flex items-center justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span className="text-gray-700 font-medium group-hover:text-indigo-700"&gt;{option.text}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;ChevronRight className="opacity-0 group-hover:opacity-100 text-indigo-500 transition-opacity" size={20} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const ResultScreen = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const resultKey = getResult();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const result = results[resultKey];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const colorClasses = {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>blue: { border: 'border-blue-500', bg: 'bg-blue-50', text: 'text-blue-500' },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>purple: { border: 'border-purple-500', bg: 'bg-purple-50', text: 'text-purple-500' },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>green: { border: 'border-green-500', bg: 'bg-green-50', text: 'text-green-500' },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>emerald: { border: 'border-emerald-500', bg: 'bg-emerald-50', text: 'text-emerald-500' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>};</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const theme = colorClasses[result.color];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="w-full max-w-2xl mx-auto p-6 animate-fadeIn pb-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className={`bg-white rounded-3xl shadow-xl overflow-hidden border-t-8 ${theme.border}`}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div className="p-8 text-center bg-gray-50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div className="inline-flex items-center justify-center w-24 h-24 bg-white rounded-full shadow-md mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>{result.icon}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;h2 className="text-3xl font-bold text-gray-800 mb-2"&gt;{result.title}&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p className="text-gray-600 italic"&gt;{result.desc}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div className="p-8 space-y-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div className="flex items-center gap-2 mb-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;Sword className="text-emerald-500" size={20} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;h3 className="font-bold text-gray-800 text-lg"&gt;對抗 Gen Z 的優勢 (Buff)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-gray-600 bg-emerald-50 p-4 rounded-lg border border-emerald-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>{result.strengths}</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div className="flex items-center gap-2 mb-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;Zap className="text-red-500" size={20} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;h3 className="font-bold text-gray-800 text-lg"&gt;潛在的致命傷 (Debuff)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-gray-600 bg-red-50 p-4 rounded-lg border border-red-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>{result.weaknesses}</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div className="flex items-center gap-2 mb-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;Heart className="text-indigo-500" size={20} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;h3 className="font-bold text-gray-800 text-lg"&gt;給管理者的升級攻略&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-gray-700 leading-relaxed bg-indigo-50 p-4 rounded-lg border border-indigo-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>{result.advice}</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                            </span></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div className="p-6 bg-gray-50 border-t border-gray-100 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;button<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>onClick={resetQuiz}</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors cursor-pointer shadow-lg"</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;RefreshCcw size={18} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>重新挑戰</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-10 px-4 font-sans"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{currentScreen === 'intro' &amp;&amp; &lt;IntroScreen /&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{currentScreen === 'quiz' &amp;&amp; &lt;QuizScreen /&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{currentScreen === 'result' &amp;&amp; &lt;ResultScreen /&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const root = ReactDOM.createRoot(document.getElementById('root'));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>root.render(&lt;QuizApp /&gt;);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
