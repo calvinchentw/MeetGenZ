@@ -1,0 +1,256 @@
+import React, { useState } from 'react';
+import { Shield, BookOpen, Target, Heart, ChevronRight, RefreshCcw, Sparkles, Sword, Zap, Leaf } from 'lucide-react';
+
+const QuizApp = () => {
+  const [currentScreen, setCurrentScreen] = useState('intro'); // intro, quiz, result
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [scores, setScores] = useState({
+    knight: 0, // 聖騎士 (規則與保護)
+    mage: 0,   // 大魔導士 (邏輯與策略)
+    ranger: 0, // 遊俠 (自由與目標)
+    druid: 0   // 德魯伊 (共情與成長)
+  });
+
+  const questions = [
+    {
+      id: 1,
+      question: "當 Gen Z 員工提出一個看起來很冒險的新點子時，你的第一反應是？",
+      options: [
+        { text: "評估這個點子是否符合公司的既有規範與長遠價值。", type: "knight" },
+        { text: "請他提出數據支持，並分析潛在的風險與回報率。", type: "mage" },
+        { text: "只要不影響原本的KPI，就讓他放手去試試看。", type: "ranger" },
+        { text: "先肯定他的創意，並關心他為什麼想做這件事。", type: "druid" }
+      ]
+    },
+    {
+      id: 2,
+      question: "員工這週因為私事心情低落，影響了工作進度，你會怎麼處理？",
+      options: [
+        { text: "雖然表示遺憾，但強調公私分明，工作期限不能變。", type: "knight" },
+        { text: "幫他重新梳理流程，看哪裡可以優化效率來補救。", type: "mage" },
+        { text: "告訴他只要週末前把結果交出來，這幾天怎麼安排都行。", type: "ranger" },
+        { text: "約個時間聊聊，確認他的心理狀態，並主動分擔部分壓力。", type: "druid" }
+      ]
+    },
+    {
+      id: 3,
+      question: "關於「下班後回訊息」這件事，你的態度是？",
+      options: [
+        { text: "身為團隊一員，緊急狀況時隨時待命是責任。", type: "knight" },
+        { text: "如果這件事能透過預排郵件或自動化解決，就不該打擾人。", type: "mage" },
+        { text: "我不看過程，只看明天早上東西有沒有在桌上。", type: "ranger" },
+        { text: "極力避免，因為這會破壞員工的「工作與生活平衡」。", type: "druid" }
+      ]
+    },
+    {
+      id: 4,
+      question: "Gen Z 員工直接在群組裡質疑你的決策，你會？",
+      options: [
+        { text: "私下找他談，告訴他雖然意見很好，但要注意職場倫理。", type: "knight" },
+        { text: "當場列出決策背後的邏輯與數據，理性辯論。", type: "mage" },
+        { text: "如果他的方法能更快達成目標，那聽他的也無妨。", type: "ranger" },
+        { text: "感謝他的直率，並邀請大家一起討論大家的感受與看法。", type: "druid" }
+      ]
+    },
+    {
+      id: 5,
+      question: "你認為對年輕員工最有效的獎勵方式是？",
+      options: [
+        { text: "公開表揚，賦予更高的頭銜或職責。", type: "knight" },
+        { text: "提供學習新技能或參加高階培訓的機會。", type: "mage" },
+        { text: "給予遠端工作機會或更彈性的工時。", type: "ranger" },
+        { text: "重視他的個人價值，讓他感受到被團隊需要。", type: "druid" }
+      ]
+    }
+  ];
+
+  const results = {
+    knight: {
+      title: "鋼鐵聖騎士",
+      icon: <Shield size={64} className="text-blue-500" />,
+      color: "blue",
+      desc: "你是團隊的守護者，重視榮譽、結構與承諾。你以身作則，是團隊最堅實的後盾。",
+      strengths: "Gen Z 雖然反體制，但其實渴望清晰的指引。你的穩定性與擔當能讓他們感到安心，不會在混亂中迷失方向。",
+      weaknesses: "過度強調「職場倫理」或「階級」容易讓年輕人覺得迂腐。他們尊重的不是頭銜，而是真實的能力與態度。",
+      advice: "建議研讀 **COACH Model**，將角色從「指揮官」轉為「教練」。對 Gen Z 來說，尊嚴來自於你能透過提問與引導（Asking & Guiding）和他們一起解決問題，而不只是坐在上位發號施令。"
+    },
+    mage: {
+      title: "全知大魔導",
+      icon: <BookOpen size={64} className="text-purple-500" />,
+      color: "purple",
+      desc: "你是智慧的化身，講求邏輯、效率與策略。你總是能看透問題本質，用知識武裝團隊。",
+      strengths: "Gen Z 是數位原住民，喜歡高效率與透明資訊。你「講道理、不情緒化」的風格非常對他們的胃口，能快速建立專業信任。",
+      weaknesses: "有時候你可能顯得太冷漠或過度說教。年輕員工除了需要「解決方案」，有時也需要「被同理」的情感連結。",
+      advice: "建議參考 **PROUD Model**，除了邏輯分析，更要關注如何建立團隊的「自豪感」與「歸屬感」。試著多了解他們個人的驅動力，讓他們在理性執行之外，也能對工作產生情感上的熱情。"
+    },
+    ranger: {
+      title: "荒野遊俠",
+      icon: <Target size={64} className="text-green-500" />,
+      color: "green",
+      desc: "你是自由的信徒，目標導向，不在乎形式。你給予團隊極大的空間，只看最後的獵物（成果）。",
+      strengths: "這正是許多 Gen Z 夢寐以求的主管！不 micromanage、重視彈性、結果論。你給予的信任能激發他們最大的創意。",
+      weaknesses: "對於需要指導的新人來說，你的「放養」可能被解讀為「冷漠」或「缺乏支援」。他們可能會在迷茫中感到焦慮。",
+      advice: "自由需要邊界，建議借鏡 **RISE UP Model** 的精神，在給予彈性的同時，建立定期的支持系統與回饋機制。確保他們在放飛自我的同時，也能感受到組織的支撐（Support）與提升（Elevate）。"
+    },
+    druid: {
+      title: "森林德魯伊",
+      icon: <Leaf size={64} className="text-emerald-500" />,
+      color: "emerald",
+      desc: "你是心靈的導師，重視和諧、成長與包容。你將團隊視為一個有機生態系，關注每個人的身心狀態。",
+      strengths: "你極度重視心理安全感與個人成長，這完全打中 Gen Z 追求「意義感」與「被尊重」的核心需求。離職率通常最低。",
+      weaknesses: "為了維護和諧，你可能過度包容錯誤，或不敢給予直接的負面回饋。這會讓優秀的人覺得不公平，或讓團隊成長停滯。",
+      advice: "「溫柔的堅定」是你的課題。建議深入研讀 **COACH Model** 中的具體回饋技巧，練習給予真實且直接的建議。記住，為了和諧而隱瞞問題不是仁慈，幫助他們面對現實並成長，才是真正的教練。"
+    }
+  };
+
+  const handleOptionClick = (type) => {
+    setScores(prev => ({
+      ...prev,
+      [type]: prev[type] + 1
+    }));
+
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(prev => prev + 1);
+    } else {
+      setCurrentScreen('result');
+    }
+  };
+
+  const getResult = () => {
+    // Find the key with the highest score
+    return Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+  };
+
+  const resetQuiz = () => {
+    setScores({ knight: 0, mage: 0, ranger: 0, druid: 0 });
+    setCurrentQuestion(0);
+    setCurrentScreen('intro');
+  };
+
+  // Components
+  const IntroScreen = () => (
+    <div className="flex flex-col items-center justify-center p-8 text-center animate-fadeIn">
+      <div className="mb-6 p-4 bg-indigo-100 rounded-full">
+        <Sparkles size={48} className="text-indigo-600" />
+      </div>
+      <h1 className="text-3xl font-bold mb-4 text-gray-800">RPG 職場轉生錄</h1>
+      <h2 className="text-xl text-gray-600 mb-8">當主管遇上 Gen Z：你的管理風格是哪個職業？</h2>
+      <p className="text-gray-500 max-w-md mb-8 leading-relaxed">
+        Z 世代帶著全新的價值觀進入職場。透過這個簡短的心理測驗，找出你的 RPG 職業原型，探索你與新世代共處的優勢與盲點。
+      </p>
+      <button 
+        onClick={() => setCurrentScreen('quiz')}
+        className="flex items-center gap-2 px-8 py-4 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 transition-all shadow-lg hover:shadow-indigo-300/50"
+      >
+        開始冒險 <ChevronRight />
+      </button>
+    </div>
+  );
+
+  const QuizScreen = () => (
+    <div className="w-full max-w-xl mx-auto p-6 animate-slideUp">
+      <div className="mb-8">
+        <div className="flex justify-between text-sm text-gray-500 mb-2">
+          <span>Quest {currentQuestion + 1}</span>
+          <span>{questions.length} Total</span>
+        </div>
+        <div className="w-full bg-gray-200 rounded-full h-2.5">
+          <div 
+            className="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" 
+            style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
+          ></div>
+        </div>
+      </div>
+      
+      <h3 className="text-2xl font-bold text-gray-800 mb-8 leading-snug">
+        {questions[currentQuestion].question}
+      </h3>
+
+      <div className="space-y-4">
+        {questions[currentQuestion].options.map((option, index) => (
+          <button
+            key={index}
+            onClick={() => handleOptionClick(option.type)}
+            className="w-full p-5 text-left bg-white border-2 border-gray-100 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition-all duration-200 group"
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-gray-700 font-medium group-hover:text-indigo-700">{option.text}</span>
+              <ChevronRight className="opacity-0 group-hover:opacity-100 text-indigo-500 transition-opacity" size={20} />
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
+  const ResultScreen = () => {
+    const resultKey = getResult();
+    const result = results[resultKey];
+
+    return (
+      <div className="w-full max-w-2xl mx-auto p-6 animate-fadeIn">
+        <div className={`bg-white rounded-3xl shadow-xl overflow-hidden border-t-8 border-${result.color}-500`}>
+          <div className="p-8 text-center bg-gray-50">
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-white rounded-full shadow-md mb-4">
+              {result.icon}
+            </div>
+            <h2 className="text-3xl font-bold text-gray-800 mb-2">{result.title}</h2>
+            <p className="text-gray-600 italic">{result.desc}</p>
+          </div>
+
+          <div className="p-8 space-y-8">
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <Sword className="text-emerald-500" size={20} />
+                <h3 className="font-bold text-gray-800 text-lg">對抗 Gen Z 的優勢 (Buff)</h3>
+              </div>
+              <p className="text-gray-600 bg-emerald-50 p-4 rounded-lg border border-emerald-100">
+                {result.strengths}
+              </p>
+            </div>
+
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <Zap className="text-red-500" size={20} />
+                <h3 className="font-bold text-gray-800 text-lg">潛在的致命傷 (Debuff)</h3>
+              </div>
+              <p className="text-gray-600 bg-red-50 p-4 rounded-lg border border-red-100">
+                {result.weaknesses}
+              </p>
+            </div>
+
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <Heart className="text-indigo-500" size={20} />
+                <h3 className="font-bold text-gray-800 text-lg">給管理者的升級攻略</h3>
+              </div>
+              <p className="text-gray-700 leading-relaxed">
+                {result.advice}
+              </p>
+            </div>
+          </div>
+          
+          <div className="p-6 bg-gray-50 border-t border-gray-100 text-center">
+            <button 
+              onClick={resetQuiz}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors"
+            >
+              <RefreshCcw size={18} />
+              重新挑戰
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-10 px-4 font-sans">
+      {currentScreen === 'intro' && <IntroScreen />}
+      {currentScreen === 'quiz' && <QuizScreen />}
+      {currentScreen === 'result' && <ResultScreen />}
+    </div>
+  );
+};
+
+export default QuizApp;
